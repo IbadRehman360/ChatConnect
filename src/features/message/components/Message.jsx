@@ -1,4 +1,4 @@
-function Login() {
+function Message() {
     return (
         <div>
             <h1> HII MESSAGE PAGE</h1>
@@ -6,4 +6,4 @@ function Login() {
     )
 }
 
-export default Login
+export default Message
