@@ -3,28 +3,30 @@ import Register from "../pages/Register"
 import Login from "../pages/Login"
 import AppLayOut from "../AppLayOut/Layout"
 import MessagePage from "../pages/MessagePage"
+import ChatLog from "../features/chat/components/ChatLog"
 
 const router = createBrowserRouter([
     {
-        path: "/",
         element: <AppLayOut />,
-        Children: [
+        children: [
+            {
+                element: <MessagePage />,
+                path: "/message",
+            },
+            {
+                element: <ChatLog />,
+                path: "/message/:userId",
+            },
             {
                 element: <Login />,
-                path: "/Login",
+                path: "/login",
             },
             {
                 element: <Register />,
-                path: "/Register",
+                path: "/register",
             },
-            {
-                element: <MessagePage />,
-                path: "/Message",
-            },
-
         ]
     }
-]
-)
+])
 
 export default router
