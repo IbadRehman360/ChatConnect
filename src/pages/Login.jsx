@@ -8,7 +8,7 @@ import { useAuth } from "../context/AuthProvider";
 
 export default function Login() {
   const navigate = useNavigate();
-  const { session } = useAuth();
+  const { session, isAuth, isLoading } = useAuth();
   const appearance = {
     theme: ThemeSupa,
     variables: {
@@ -20,21 +20,29 @@ export default function Login() {
       },
     },
   };
+  useEffect(() => {
+    supabase.auth.onAuthStateChange((event) => {
+      if (event == "SIGNED_IN") navigate("/message");
+    });
+  }, [navigate]);
 
   useEffect(() => {
-    if (session) {
+    if (isAuth) {
       navigate("/message");
     }
-  }, [session, navigate]);
+  }, [isAuth, navigate]);
 
-  if (session)
-    return (
-      <Auth
-        supabaseClient={supabase}
-        appearance={appearance}
-        providers={["google"]}
-        view="sign_in"
-        redirectTo="http://localhost:5173/"
-      />
-    );
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+    <Auth
+      supabaseClient={supabase}
+      appearance={appearance}
+      providers={["google"]}
+      view="sign_in"
+      redirectTo="http://localhost:5173/"
+    />
+  );
 }

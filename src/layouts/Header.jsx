@@ -1,33 +1,52 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthProvider";
 
 function Header() {
+  const { signOutUser } = useAuth();
+  // const navigate = useNavigate();
+  // async function handleSignOut() {
+  //   const signedOut = await signOutUser();
+  //   if (signedOut) {
+  //     navigate("/message");
+  //   }
+  // }
+
   return (
     <div className="bg-gray-700 p-4">
       <nav className="flex items-center justify-between">
-        <Link
-          to="/login"
+        <a
+          href="/login"
           className="text-white text-lg font-semibold hover:text-gray-300 transition duration-300 ease-in-out"
         >
           GO TO LOGIN
-        </Link>
+        </a>
         <div className="space-x-4">
-          <Link
-            to="/signUp"
+          <a
+            href="/register"
             className="text-white hover:text-gray-300 transition duration-300 ease-in-out"
           >
             REGISTER
-          </Link>
-          <Link
-            to="/message"
+          </a>
+          <a
+            href="/message"
             className="text-white hover:text-gray-300 transition duration-300 ease-in-out"
           >
             MESSAGE
-          </Link>
-          <Link
-            to="/message/:userID"
+          </a>
+          <a
+            href="/message/:userID"
             className="text-white hover:text-gray-300 transition duration-300 ease-in-out"
           >
             MESSAGE/USER
+          </a>
+          <Link
+            as="a"
+            onClick={() => signOutUser()}
+            className="text-white hover:text-gray-300 transition duration-300
+            ease-in-out"
+          >
+            {" "}
+            LOGOUT
           </Link>
         </div>
       </nav>

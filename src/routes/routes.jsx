@@ -10,10 +10,18 @@ const router = createBrowserRouter([
   {
     element: (
       <AuthProvider>
-        <AppLayOut />,
+        <AppLayOut />
       </AuthProvider>
     ),
     children: [
+      {
+        path: "/register",
+        element: <Signup />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
+      },
       {
         element: <MessagePage />,
         path: "/message",
@@ -21,14 +29,6 @@ const router = createBrowserRouter([
       {
         element: <ChatLog />,
         path: "/message/:userId",
-      },
-      {
-        element: <Login />,
-        path: "/login",
-      },
-      {
-        path: "/signup",
-        element: <Signup />,
       },
     ],
   },
