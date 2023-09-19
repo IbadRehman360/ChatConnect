@@ -8,7 +8,7 @@ import { useAuth } from "../context/AuthProvider";
 
 export default function Login() {
   const navigate = useNavigate();
-  const { session, isAuth, isLoading } = useAuth();
+  const { isAuth, isLoading } = useAuth();
   const appearance = {
     theme: ThemeSupa,
     variables: {
