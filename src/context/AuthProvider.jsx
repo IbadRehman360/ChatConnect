@@ -16,6 +16,7 @@ function AuthProvider({ children }) {
       const {
         data: { session },
       } = await supabase.auth.getSession();
+
       if (session) {
         const {
           data: { user },
@@ -44,10 +45,11 @@ function AuthProvider({ children }) {
   useEffect(() => {
     getSession();
   }, []);
+
   if (!isLoading)
     return (
       <AuthContext.Provider
-        value={{ isLoading, isAuth, session, userData, signOutUser }}
+        value={{ isLoading, isAuth, session, userData, getSession , signOutUser }}
       >
         {children}
       </AuthContext.Provider>
