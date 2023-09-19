@@ -1,7 +1,7 @@
-import Message from "../features/message/components/Message"
+import Message from "../features/message/components/Message";
 
 function MessagePage() {
-    return <Message />
+  return <Message />;
 }
 
-export default MessagePage
+export default MessagePage;

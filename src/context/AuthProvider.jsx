@@ -38,9 +38,10 @@ function AuthProvider({ children }) {
   async function signOutUser() {
     const { error } = await supabase.auth.signOut();
     if (error) {
-      return false;
+      console.error(error);
+    } else {
+      window.location.reload();
     }
-    return true;
   }
   useEffect(() => {
     getSession();
@@ -49,7 +50,14 @@ function AuthProvider({ children }) {
   if (!isLoading)
     return (
       <AuthContext.Provider
-        value={{ isLoading, isAuth, session, userData, getSession , signOutUser }}
+        value={{
+          isLoading,
+          isAuth,
+          session,
+          userData,
+          getSession,
+          signOutUser,
+        }}
       >
         {children}
       </AuthContext.Provider>

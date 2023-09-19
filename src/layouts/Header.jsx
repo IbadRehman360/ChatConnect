@@ -4,34 +4,25 @@ import { useAuth } from "../context/AuthProvider";
 function Header() {
   const { signOutUser, session } = useAuth();
   const navigate = useNavigate();
-  async function handleSignOut() {
-    const signedOut = await signOutUser();
-    if (!signedOut) {
-      return <div> HIII </div>;
-    }
-    if (signedOut) {
-      navigate("/message");
-    }
-  }
 
   return (
-    <div className="bg-gray-700 p-4">
-      <nav className="flex items-center justify-between">
+    <div className=" bg-[#3b5878] p-6 ">
+      <nav className="flex  items-center justify-between">
         {!session ? (
-          <>
+          <div className="flex justify-end flex-1  space-x-6 ">
             <a
               href="/login"
-              className="text-white text-lg font-semibold hover:text-gray-300 transition duration-300 ease-in-out"
+              className="text-white text-md font-semibold hover:text-gray-300 transition duration-300 ease-in-out"
             >
               GO TO LOGIN
             </a>
             <a
               href="/register"
-              className="text-white hover:text-gray-300 transition duration-300 ease-in-out"
+              className="text-gray-50 text-md font-semibold hover:text-gray-300 transition duration-300 ease-in-out"
             >
               REGISTER
             </a>
-          </>
+          </div>
         ) : (
           <div className="space-x-4">
             <a
@@ -46,14 +37,13 @@ function Header() {
             >
               MESSAGE/USER
             </a>
-            <Link
-              as="a"
-              onClick={() => handleSignOut()}
+            <button
+              onClick={() => signOutUser()}
               className="text-white hover:text-gray-300 transition duration-300
             ease-in-out"
             >
               LOGOUT
-            </Link>
+            </button>
           </div>
         )}
       </nav>

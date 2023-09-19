@@ -5,6 +5,7 @@ import AppLayOut from "../layouts/Layout";
 import MessagePage from "../pages/MessagePage";
 import ChatLog from "../features/chat/components/ChatLog";
 import { AuthProvider } from "../context/AuthProvider";
+import ProtectedRoute from "../context/ProtectedRoute";
 
 const router = createBrowserRouter([
   {
@@ -23,11 +24,19 @@ const router = createBrowserRouter([
         element: <Login />,
       },
       {
-        element: <MessagePage />,
+        element: (
+          <ProtectedRoute>
+            <MessagePage />,
+          </ProtectedRoute>
+        ),
         path: "/message",
       },
       {
-        element: <ChatLog />,
+        element: (
+          <ProtectedRoute>
+            <ChatLog />,
+          </ProtectedRoute>
+        ),
         path: "/message/:userId",
       },
     ],
