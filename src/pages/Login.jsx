@@ -8,7 +8,7 @@ import { useAuth } from "../context/AuthProvider";
 
 export default function Login() {
   const navigate = useNavigate();
-  const { session, isLoading } = useAuth();
+  const { session, isLoading, getSession } = useAuth();
   const appearance = {
     theme: ThemeSupa,
     variables: {
@@ -22,7 +22,10 @@ export default function Login() {
   };
   useEffect(() => {
     supabase.auth.onAuthStateChange((event) => {
-      if (event == "SIGNED_IN") navigate("/message");
+      if (event == "SIGNED_IN") {
+        getSession();
+        navigate("/message");
+      }
     });
   }, [navigate]);
 
