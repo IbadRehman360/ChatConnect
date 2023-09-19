@@ -1,12 +1,14 @@
-// import { Link } from "react-router-dom"
-import { useState, useEffect } from "react";
+// Login.js
+import { useEffect } from "react";
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import supabase from "../services/supabase";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthProvider";
+
 export default function Login() {
   const navigate = useNavigate();
-  const [session, setSession] = useState(null);
+  const { session } = useAuth();
   const appearance = {
     theme: ThemeSupa,
     variables: {
@@ -19,29 +21,20 @@ export default function Login() {
     },
   };
 
-  if (session) navigate("/messages");
-
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-    });
+    if (session) {
+      navigate("/message");
+    }
+  }, [session, navigate]);
 
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
-
-  return (
-    <Auth
-      supabaseClient={supabase}
-      appearance={appearance}
-      providers={["google"]}
-      view="sign_in"
-      redirectTo="http://localhost:5173/"
-    />
-  );
+  if (session)
+    return (
+      <Auth
+        supabaseClient={supabase}
+        appearance={appearance}
+        providers={["google"]}
+        view="sign_in"
+        redirectTo="http://localhost:5173/"
+      />
+    );
 }

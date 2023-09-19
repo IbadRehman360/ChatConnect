@@ -4,7 +4,6 @@ import supabase from "../services/supabase";
 import { useNavigate } from "react-router-dom";
 
 async function Signup() {
-  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   async function handleSignup() {
@@ -17,7 +16,6 @@ async function Signup() {
         console.error("Error signing up:", error.message);
       } else {
         console.log("Signup successful:", user);
-        navigate("/");
       }
     } catch (error) {
       console.error("Error signing up:", error.message);

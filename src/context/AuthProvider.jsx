@@ -4,19 +4,26 @@ import supabase from "../services/supabase";
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  const [session, setSession] = useState(null); // Change initial state to null
-  const [authUserData, setAuthUserData] = useState(null); // Change initial state to null
+  const [session, setSession] = useState(null);
+  const [authUserData, setAuthUserData] = useState(null);
   const [isAuth, setIsAuth] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   const getSession = async () => {
-    const { session, user, error } = await supabase.auth.session(); // Simplified session retrieval
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
     if (session) {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       setSession(session);
-      setAuthUserData(user); // Fixed the function call
       setIsAuth(true);
+      setAuthUserData(user);
+      setIsLoading(false);
+    } else {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -28,29 +35,20 @@ export function AuthProvider({ children }) {
     if (error) {
       return false;
     }
-    setSession(null);
-    setIsAuth(false);
-    setAuthUserData(null);
     return true;
   }
-
-  const contextValue = {
-    isLoading,
-    isAuth,
-    session,
-    authUserData,
-    signOutUser,
-  };
-
   return (
-    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
+    <AuthContext.Provider
+      value={(isLoading, isAuth, session, authUserData, signOutUser)}
+    >
+      {children}
+    </AuthContext.Provider>
   );
 }
 
 export function useAuth() {
   const context = useContext(AuthContext);
-  if (!context) {
+  if (context === undefined)
     throw new Error("Error, context being used out of provider");
-  }
   return context;
 }
