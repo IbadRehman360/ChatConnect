@@ -33,7 +33,6 @@ function Signup() {
         console.log(error);
         setError(error);
       }
-      alert("Check your email for verification link");
     } catch (error) {
       setError(error);
     }
