@@ -41,9 +41,9 @@ function AuthProvider({ children }) {
     }
     return true;
   }
-  // useEffect(() => {
-  //   getSession();
-  // }, []);
+  useEffect(() => {
+    getSession();
+  }, []);
   if (!isLoading)
     return (
       <AuthContext.Provider
