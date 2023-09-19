@@ -3,9 +3,10 @@ import { useState, useEffect } from "react";
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import supabase from "../services/supabase";
+import { useNavigate } from "react-router-dom";
 export default function Login() {
+  const navigate = useNavigate();
   const [session, setSession] = useState(null);
-
   const appearance = {
     theme: ThemeSupa,
     variables: {
@@ -17,6 +18,8 @@ export default function Login() {
       },
     },
   };
+
+  if (session) navigate("/messages");
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -32,17 +35,13 @@ export default function Login() {
     return () => subscription.unsubscribe();
   }, []);
 
-  if (!session) {
-    return (
-      <Auth
-        supabaseClient={supabase}
-        appearance={appearance}
-        providers={["google"]}
-        view="sign_in"
-        redirectTo="http://localhost:5173/"
-      />
-    );
-  } else {
-    return <div>Logged in!</div>;
-  }
+  return (
+    <Auth
+      supabaseClient={supabase}
+      appearance={appearance}
+      providers={["google"]}
+      view="sign_in"
+      redirectTo="http://localhost:5173/"
+    />
+  );
 }
