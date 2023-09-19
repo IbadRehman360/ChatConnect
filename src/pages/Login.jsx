@@ -8,7 +8,7 @@ import { useAuth } from "../context/AuthProvider";
 
 export default function Login() {
   const navigate = useNavigate();
-  const { isAuth, isLoading } = useAuth();
+  const { session, isLoading } = useAuth();
   const appearance = {
     theme: ThemeSupa,
     variables: {
@@ -27,10 +27,10 @@ export default function Login() {
   }, [navigate]);
 
   useEffect(() => {
-    if (isAuth) {
+    if (session) {
       navigate("/message");
     }
-  }, [isAuth, navigate]);
+  }, [session, navigate]);
 
   if (isLoading) {
     return <div>Loading...</div>;

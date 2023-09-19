@@ -10,6 +10,7 @@ function AuthProvider({ children }) {
   const [isLoading, setIsLoading] = useState(true);
   const [session, setSession] = useState(null);
   const [userData, setUserData] = useState(null);
+
   async function getSession() {
     try {
       const {
@@ -38,13 +39,11 @@ function AuthProvider({ children }) {
     if (error) {
       return false;
     }
-    navigate("/message");
+    return true;
   }
-
-  useEffect(() => {
-    getSession();
-  }, []);
-
+  // useEffect(() => {
+  //   getSession();
+  // }, []);
   if (!isLoading)
     return (
       <AuthContext.Provider
@@ -61,4 +60,4 @@ function useAuth() {
   return context;
 }
 
-export { useAuth, AuthProvider };
+export { AuthProvider, useAuth };
